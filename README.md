@@ -7,7 +7,7 @@ A modern, responsive **personal website** built with **React** and **Tailwind CS
 ## 🚀 Live Demo
 
 👉 [View Live Site](https://AlejandroDeLaRocha.com)  
-_(Replace with your actual domain or GitHub Pages URL)_
+
 
 ---
 
