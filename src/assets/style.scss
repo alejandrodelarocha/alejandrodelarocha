@@ -1,0 +1,51 @@
+html {
+  scroll-behavior: smooth;
+}
+
+.logo-container {
+  img {
+    filter: invert(1);
+  }
+  color: white;
+}
+
+.floating {
+  width: 100px;
+  height: 100px;
+  background-color: lightblue;
+  border-radius: 50%;
+  position: relative;
+  animation: float 3s ease-in-out infinite;
+}
+
+.floating-flat {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  animation: float 3s ease-in-out infinite;
+}
+
+
+@keyframes float {
+  0% {
+      transform: translateY(0);
+  }
+
+  50% {
+      transform: translateY(-20px);
+  }
+
+  100% {
+      transform: translateY(0);
+  }
+}
+
+@keyframes backgroundFade {
+  0% { background-color: #000000; }  /* Pure black */
+  50% { background-color: #1a1a1a; } /* Lighter black */
+  100% { background-color: #000000; } /* Back to black */
+}
+
+body {
+  animation: backgroundFade 10s infinite alternate ease-in-out;
+}
