@@ -1,16 +1,25 @@
-## Hi there 👋
+# 🌐 Personal Portfolio Website
 
-<!--
-**alejandrodelarocha/alejandrodelarocha** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+A modern, responsive **personal website** built with **React** and **Tailwind CSS**, designed to showcase my projects, skills, resume, and contact information. This site serves as my digital business card and personal brand.
 
-Here are some ideas to get you started:
+---
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+## 🚀 Live Demo
+
+👉 [View Live Site](https://AlejandroDeLaRocha.com)  
+_(Replace with your actual domain or GitHub Pages URL)_
+
+---
+
+## 📸 Preview
+
+<img width="1419" alt="Screenshot 2025-06-25 at 11 41 01 a m" src="https://github.com/user-attachments/assets/04060e05-87a3-4f92-876f-1e166989cb06" />
+
+_(Include a screenshot or screen recording here)_
+
+---
+
+## ⚙️ Tech Stack
+
+- **Frontend**: React, HTML5, CSS/SCSS, Tailwind CSS
+- **Version Control**: Git + GitHub
