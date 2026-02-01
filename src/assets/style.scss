@@ -1,0 +1,124 @@
+html {
+  scroll-behavior: smooth;
+}
+
+.logo-container {
+  img {
+    filter: invert(1);
+  }
+  color: white;
+}
+
+.floating {
+  width: 100px;
+  height: 100px;
+  background-color: lightblue;
+  border-radius: 50%;
+  position: relative;
+  animation: float 3s ease-in-out infinite;
+}
+
+.floating-flat {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  animation: float 3s ease-in-out infinite;
+}
+
+
+@keyframes float {
+  0% {
+      transform: translateY(0);
+  }
+
+  50% {
+      transform: translateY(-20px);
+  }
+
+  100% {
+      transform: translateY(0);
+  }
+}
+
+.orbit-container {
+  position: relative;
+  width: 400px;
+  height: 400px;
+}
+
+.orbit-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 500px;
+  height: 500px;
+  margin-top: -250px;
+  margin-left: -250px;
+  border-radius: 50%;
+  animation: orbit-spin 20s linear infinite;
+}
+
+.orbit-icon {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background: rgba(30, 58, 138, 0.8);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+  animation: orbit-counter-spin 20s linear infinite;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.orbit-icon:nth-child(1) { top: 0; left: 50%; transform: translateX(-50%); }
+.orbit-icon:nth-child(2) { top: 15%; right: 3%; }
+.orbit-icon:nth-child(3) { bottom: 15%; right: 3%; }
+.orbit-icon:nth-child(4) { bottom: 0; left: 50%; transform: translateX(-50%); }
+.orbit-icon:nth-child(5) { bottom: 15%; left: 3%; }
+.orbit-icon:nth-child(6) { top: 15%; left: 3%; }
+
+@keyframes orbit-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes orbit-counter-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+@media (max-width: 640px) {
+  .orbit-container {
+    width: 200px;
+    height: 200px;
+  }
+  .orbit-ring {
+    width: 280px;
+    height: 280px;
+    margin-top: -140px;
+    margin-left: -140px;
+  }
+  .orbit-icon {
+    width: 35px;
+    height: 35px;
+    padding: 5px;
+  }
+}
+
+@keyframes backgroundFade {
+  0% { background-color: #000000; }  /* Pure black */
+  50% { background-color: #1a1a1a; } /* Lighter black */
+  100% { background-color: #000000; } /* Back to black */
+}
+
+body {
+  animation: backgroundFade 10s infinite alternate ease-in-out;
+}
