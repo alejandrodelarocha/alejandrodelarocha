@@ -201,8 +201,8 @@ const Langs = () => {
               </p>
             </div>
             <div className="w-full max-w-[80%] h-6 bg-gray-200 rounded-full dark:bg-gray-700 mt-5 mx-auto">
-              <div className="h-6 bg-blue-600 rounded-full dark:bg-blue-500" style={{ width: '90%' }}>
-                9 Years
+              <div className="h-6 bg-blue-600 rounded-full dark:bg-blue-500" style={{ width: '25%' }}>
+                2 Years
               </div>
             </div>
           </div>
