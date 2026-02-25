@@ -19,6 +19,8 @@ export default function ProposalForm() {
   const [scrapingUrl, setScrapingUrl] = useState('')
   const [scrapingLoading, setScrapingLoading] = useState(false)
   const [scrapedImages, setScrapedImages] = useState([])
+  const [generatingLanding, setGeneratingLanding] = useState(false)
+  const [generatedLandingUrl, setGeneratedLandingUrl] = useState(null)
 
   useEffect(() => {
     if (isEdit) {
@@ -77,6 +79,34 @@ export default function ProposalForm() {
       setError(err.response?.data?.error || 'Failed to scrape website')
     } finally {
       setScrapingLoading(false)
+    }
+  }
+
+  const handleGenerateLandingPage = async () => {
+    if (!formData.name || !formData.description) {
+      setError('Please fill in project name and description first')
+      return
+    }
+
+    setGeneratingLanding(true)
+    setError('')
+
+    try {
+      const response = await axios.post('/api/generator/generate-landing-page', {
+        proposalId: id || `new-${Date.now()}`,
+        proposalData: {
+          name: formData.name,
+          description: formData.description,
+          pitch_text: formData.pitch_text,
+          images: scrapedImages,
+        },
+      })
+
+      setGeneratedLandingUrl(response.data.url)
+    } catch (err) {
+      setError(err.response?.data?.error || 'Failed to generate landing page')
+    } finally {
+      setGeneratingLanding(false)
     }
   }
 
@@ -157,6 +187,36 @@ export default function ProposalForm() {
                     />
                   ))}
                 </div>
+              </div>
+            )}
+          </div>
+
+          {/* Landing Page Generator */}
+          <div className="bg-purple-50 border-2 border-purple-300 rounded-lg p-6 mb-6">
+            <h2 className="text-xl font-bold mb-4 text-purple-900">🚀 Generate Landing Page</h2>
+            <p className="text-sm text-gray-600 mb-4">Create a beautiful landing page for this project using AI</p>
+
+            <button
+              type="button"
+              onClick={handleGenerateLandingPage}
+              disabled={generatingLanding || !formData.name}
+              className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded transition disabled:opacity-50"
+            >
+              {generatingLanding ? 'Generating...' : '✨ Generate Landing Page'}
+            </button>
+
+            {generatedLandingUrl && (
+              <div className="mt-4 p-4 bg-green-100 border border-green-400 rounded">
+                <p className="text-green-800 font-bold mb-2">✓ Landing page generated!</p>
+                <a
+                  href={generatedLandingUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-blue-600 hover:text-blue-800 underline block mb-2"
+                >
+                  View Landing Page
+                </a>
+                <p className="text-sm text-gray-600">Link: {generatedLandingUrl}</p>
               </div>
             )}
           </div>
