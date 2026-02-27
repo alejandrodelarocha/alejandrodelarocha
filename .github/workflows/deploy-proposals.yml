@@ -31,4 +31,4 @@ jobs:
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           script: |
             cd /opt/proposals-app
-            docker compose up -d --build
+            docker-compose up -d --build
