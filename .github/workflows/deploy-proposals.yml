@@ -1,0 +1,26 @@
+name: Deploy Proposals App
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'proposals-app/**'
+      - 'proposals.json'
+      - '.github/workflows/deploy-proposals.yml'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy to server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: 198.12.73.192
+          username: root
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          script: |
+            cd /opt/proposals-app
+            git pull origin main
+            docker compose up -d --build
