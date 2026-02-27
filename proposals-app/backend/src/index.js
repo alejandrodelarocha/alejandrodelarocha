@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import authRoutes from './routes/auth.js';
-import proposalRoutes from './routes/proposals.js';
+import proposalRoutes, { seedFromJson } from './routes/proposals.js';
 import scraperRoutes from './routes/scraper.js';
 import generatorRoutes from './routes/generator.js';
 
@@ -32,6 +32,7 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`✅ Proposals API running on port ${PORT}`);
+  await seedFromJson();
 });

@@ -18,12 +18,3 @@ CREATE TABLE IF NOT EXISTS proposals (
   created_at    TIMESTAMP DEFAULT NOW(),
   updated_at    TIMESTAMP DEFAULT NOW()
 );
-
--- Seed the 6 existing proposals
-INSERT INTO proposals (name, icon, description, tags, url_path, status) VALUES
-  ('Serenity Salon', '✨', 'Modern salon & spa website with services showcase, team gallery, online booking integration, and local SEO optimization for Powder Springs, GA.', ARRAY['Salon & Spa', 'Design', 'Responsive'], '/serenitysalon/', 'sent'),
-  ('Bloom Salon', '🌸', 'Premium hair salon website featuring color transformations, stylist profiles, appointment booking, and social media integration.', ARRAY['Hair Salon', 'Design', 'E-Booking'], '/bloomsalon/', 'sent'),
-  ('Hair Bloom', '💇', 'Elegant hair styling studio with portfolio gallery, pricing tables, client testimonials, and location mapping.', ARRAY['Hair Studio', 'Portfolio', 'Mobile-First'], '/hairbloom/', 'sent'),
-  ('Blue Mound Cafe', '☕', 'Cozy cafe website showcasing menu, ambiance photography, location hours, and community event calendar.', ARRAY['Cafe', 'Menu Design', 'Community'], '/bluemoundcafe/', 'sent'),
-  ('Dustin Bunny', '🐰', 'Playful pet grooming service website with before/after galleries, service pricing, grooming tips, and appointment system.', ARRAY['Pet Care', 'Gallery', 'Booking'], '/dustinbunny/', 'sent'),
-  ('CLSO', '🎻', 'Symphony orchestra website with performance schedule, artist bios, ticket purchasing, and donor recognition.', ARRAY['Arts', 'Events', 'Ticketing'], '/clso/', 'sent');

@@ -10,32 +10,49 @@ const router = express.Router();
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PROPOSALS_CONFIG = join(__dirname, '../../proposals.json');
 
-const loadStaticProposals = () => {
-  const raw = readFileSync(PROPOSALS_CONFIG, 'utf8');
-  return JSON.parse(raw).filter(p => p.status !== 'draft');
+export const seedFromJson = async () => {
+  try {
+    const { rows } = await pool.query('SELECT COUNT(*) FROM proposals');
+    if (parseInt(rows[0].count) > 0) return;
+
+    const proposals = JSON.parse(readFileSync(PROPOSALS_CONFIG, 'utf8'));
+    for (const p of proposals) {
+      await pool.query(
+        `INSERT INTO proposals (name, icon, description, tags, url_path, status)
+         VALUES ($1, $2, $3, $4, $5, $6)`,
+        [p.name, p.icon, p.description, p.tags || [], p.url_path, p.status || 'sent']
+      );
+    }
+    console.log(`✅ Seeded ${proposals.length} proposals from proposals.json`);
+  } catch (err) {
+    console.error('Seed error:', err.message);
+  }
 };
 
 // GET all proposals (public, non-draft)
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   try {
-    res.json(loadStaticProposals());
+    const result = await pool.query(
+      'SELECT * FROM proposals WHERE status != $1 ORDER BY created_at DESC',
+      ['draft']
+    );
+    res.json(result.rows);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'Failed to load proposals' });
+    res.status(500).json({ error: 'Database error' });
   }
 });
 
 // GET single proposal
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
-    const proposals = loadStaticProposals();
-    const proposal = proposals.find(p => p.id === req.params.id);
-    if (!proposal) {
+    const result = await pool.query('SELECT * FROM proposals WHERE id = $1', [req.params.id]);
+    if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Proposal not found' });
     }
-    res.json(proposal);
+    res.json(result.rows[0]);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to load proposal' });
+    res.status(500).json({ error: 'Database error' });
   }
 });
 
