@@ -1,33 +1,41 @@
 import express from 'express';
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 import pool from '../db/pool.js';
 import { verifyToken } from '../middleware/auth.js';
 
 const router = express.Router();
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const PROPOSALS_CONFIG = join(__dirname, '../../../proposals.json');
+
+const loadStaticProposals = () => {
+  const raw = readFileSync(PROPOSALS_CONFIG, 'utf8');
+  return JSON.parse(raw).filter(p => p.status !== 'draft');
+};
+
 // GET all proposals (public, non-draft)
-router.get('/', async (req, res) => {
+router.get('/', (req, res) => {
   try {
-    const result = await pool.query(
-      'SELECT * FROM proposals WHERE status != $1 ORDER BY created_at DESC',
-      ['draft']
-    );
-    res.json(result.rows);
+    res.json(loadStaticProposals());
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'Database error' });
+    res.status(500).json({ error: 'Failed to load proposals' });
   }
 });
 
 // GET single proposal
-router.get('/:id', async (req, res) => {
+router.get('/:id', (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM proposals WHERE id = $1', [req.params.id]);
-    if (result.rows.length === 0) {
+    const proposals = loadStaticProposals();
+    const proposal = proposals.find(p => p.id === req.params.id);
+    if (!proposal) {
       return res.status(404).json({ error: 'Proposal not found' });
     }
-    res.json(result.rows[0]);
+    res.json(proposal);
   } catch (err) {
-    res.status(500).json({ error: 'Database error' });
+    res.status(500).json({ error: 'Failed to load proposal' });
   }
 });
 

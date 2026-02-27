@@ -1,0 +1,47 @@
+[
+  {
+    "id": "monrovia",
+    "name": "Monrovia",
+    "icon": "🌐",
+    "description": "Web design proposal for Monrovia.",
+    "tags": [],
+    "url_path": "/monrovia/",
+    "status": "sent"
+  },
+  {
+    "id": "perth",
+    "name": "Perth",
+    "icon": "🌐",
+    "description": "Web design proposal for Perth.",
+    "tags": [],
+    "url_path": "/perth/",
+    "status": "sent"
+  },
+  {
+    "id": "port-louis",
+    "name": "Port Louis",
+    "icon": "🌐",
+    "description": "Web design proposal for Port Louis.",
+    "tags": [],
+    "url_path": "/port-louis/",
+    "status": "sent"
+  },
+  {
+    "id": "sofia",
+    "name": "Sofia",
+    "icon": "🌐",
+    "description": "Web design proposal for Sofia.",
+    "tags": [],
+    "url_path": "/sofia/",
+    "status": "sent"
+  },
+  {
+    "id": "tokyo-v1",
+    "name": "Tokyo",
+    "icon": "🌐",
+    "description": "Web design proposal for Tokyo.",
+    "tags": [],
+    "url_path": "/tokyo-v1/",
+    "status": "sent"
+  }
+]
