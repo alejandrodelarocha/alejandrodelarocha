@@ -6,6 +6,7 @@ COPY package*.json ./
 
 RUN npm install
 
+COPY proposals.json ./
 COPY src ./src
 
 EXPOSE 4000
