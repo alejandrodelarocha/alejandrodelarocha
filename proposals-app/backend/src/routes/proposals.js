@@ -8,7 +8,7 @@ import { verifyToken } from '../middleware/auth.js';
 const router = express.Router();
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const PROPOSALS_CONFIG = join(__dirname, '../../../proposals.json');
+const PROPOSALS_CONFIG = join(__dirname, '../../proposals.json');
 
 const loadStaticProposals = () => {
   const raw = readFileSync(PROPOSALS_CONFIG, 'utf8');
