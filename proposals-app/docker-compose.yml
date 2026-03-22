@@ -21,11 +21,13 @@ services:
   api:
     build: ./backend
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER:-proposals_user}:${POSTGRES_PASSWORD:-proposals_pass}@db:5432/${POSTGRES_DB:-proposals_db}
       JWT_SECRET: ${JWT_SECRET:-your-secret-key}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin123}
+      MISTRAL_API_KEY: ${MISTRAL_API_KEY:-}
       PORT: 4000
     ports:
       - "4000:4000"

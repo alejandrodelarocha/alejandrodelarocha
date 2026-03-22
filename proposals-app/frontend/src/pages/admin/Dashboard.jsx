@@ -17,7 +17,7 @@ export default function Dashboard() {
     const fetchProposals = async () => {
       try {
         // Fetch all proposals (admin view includes drafts)
-        const response = await proposalsAPI.list()
+        const response = await proposalsAPI.listAll()
         setProposals(response.data)
       } catch (err) {
         console.error('Failed to fetch proposals', err)

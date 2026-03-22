@@ -15,6 +15,7 @@ export const APP_DATA_ENGLISH = {
     { label: "Projects", href: "#projects" },
     { label: "Testimonials", href: "#testimonials" },
     { label: "Contact", href: "#contact" },
+    { label: "Proposals", href: "/proposals/" },
   ],
 
   main: {
@@ -105,6 +106,7 @@ export const APP_DATA_SPANISH = {
     { label: "Proyectos", href: "#projects" },
     { label: "Testimonios", href: "#testimonials" },
     { label: "Contacto", href: "#contact" },
+    { label: "Propuestas", href: "/proposals/" },
   ],
 
   main: {

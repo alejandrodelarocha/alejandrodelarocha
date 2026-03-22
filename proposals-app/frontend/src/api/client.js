@@ -20,6 +20,7 @@ client.interceptors.request.use((config) => {
 
 export const proposalsAPI = {
   list: () => client.get(''),
+  listAll: () => client.get('/admin/all'),
   get: (id) => client.get(`/${id}`),
   create: (data) => client.post('', data),
   update: (id, data) => client.put(`/${id}`, data),

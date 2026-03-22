@@ -32,7 +32,26 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
+const waitForDb = async (retries = 10, delay = 2000) => {
+  const { default: pool } = await import('./db/pool.js');
+  for (let i = 0; i < retries; i++) {
+    try {
+      await pool.query('SELECT 1');
+      return true;
+    } catch (err) {
+      console.log(`⏳ Waiting for database... (${i + 1}/${retries})`);
+      await new Promise(r => setTimeout(r, delay));
+    }
+  }
+  throw new Error('Database not available after retries');
+};
+
 app.listen(PORT, async () => {
   console.log(`✅ Proposals API running on port ${PORT}`);
-  await seedFromJson();
+  try {
+    await waitForDb();
+    await seedFromJson();
+  } catch (err) {
+    console.error('❌ Startup error:', err.message);
+  }
 });
