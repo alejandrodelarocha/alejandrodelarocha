@@ -7,7 +7,17 @@ services:
     image: rochastudios/listing:latest
     container_name: rochastudios-listing
     ports:
-      - "4174:80"
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"   # HTTP/3 (QUIC)
+    environment:
+      # Set to your real subdomain on OutstandingRealtor.com for auto-TLS
+      # e.g. HOST=listing.outstandingrealtor.com
+      HOST: ${HOST:-localhost}
+    volumes:
+      # Caddy stores TLS certs + config here — persist across restarts
+      - caddy_data:/data
+      - caddy_config:/config
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://localhost/"]
@@ -17,4 +27,8 @@ services:
       start_period: 10s
     labels:
       - "com.rochastudios.app=listing"
-      - "com.rochastudios.description=Presentation editor with Azure Neural TTS voiceover"
+      - "com.rochastudios.site=outstandingrealtor.com"
+
+volumes:
+  caddy_data:
+  caddy_config:

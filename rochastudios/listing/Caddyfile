@@ -1,0 +1,52 @@
+# ── RochaStudios Listing — part of OutstandingRealtor.com ─────────────────────
+# Caddy auto-provisions TLS (Let's Encrypt) when HOST is a real domain.
+# In local/Docker development it falls back to HTTP.
+
+{$HOST:localhost}
+
+root * /srv
+
+# Compression
+encode zstd gzip
+
+# SPA fallback — serve index.html for all unknown paths
+try_files {path} /index.html
+
+file_server
+
+# Security headers
+header {
+  # Prevent clickjacking
+  X-Frame-Options "SAMEORIGIN"
+  # XSS protection (legacy browsers)
+  X-XSS-Protection "1; mode=block"
+  # No MIME sniffing
+  X-Content-Type-Options "nosniff"
+  # Referrer policy
+  Referrer-Policy "strict-origin-when-cross-origin"
+  # Permissions policy — restrict browser features
+  Permissions-Policy "camera=(), microphone=(self), geolocation=()"
+  # HSTS (activated only when served over HTTPS by Caddy)
+  Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+  # Remove server fingerprint
+  -Server
+}
+
+# Cache immutable hashed assets aggressively
+@hashed {
+  path /assets/*
+}
+header @hashed Cache-Control "public, max-age=31536000, immutable"
+
+# Don't cache index.html
+@html {
+  path *.html
+  path /
+}
+header @html Cache-Control "no-cache"
+
+log {
+  output stdout
+  format console
+  level INFO
+}
