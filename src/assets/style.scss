@@ -70,12 +70,56 @@ html {
   padding: 8px;
   box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
   animation: orbit-counter-spin 20s linear infinite;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
 
   img {
     width: 100%;
     height: 100%;
     object-fit: contain;
+    transition: filter 0.3s ease;
   }
+
+  &::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) scale(0.8);
+    background: rgba(15, 23, 42, 0.95);
+    color: #93c5fd;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+  }
+
+  &:hover {
+    background: rgba(37, 99, 235, 0.95);
+    box-shadow: 0 0 25px rgba(59, 130, 246, 0.9), 0 0 50px rgba(59, 130, 246, 0.4);
+    transform: scale(1.25) rotate(0deg);
+
+    img {
+      filter: drop-shadow(0 0 6px rgba(147, 197, 253, 0.8));
+    }
+
+    &::after {
+      opacity: 1;
+      transform: translateX(-50%) scale(1);
+    }
+  }
+}
+
+@keyframes icon-pulse {
+  0%, 100% { box-shadow: 0 0 15px rgba(59, 130, 246, 0.5); }
+  50% { box-shadow: 0 0 25px rgba(59, 130, 246, 0.9), 0 0 40px rgba(59, 130, 246, 0.3); }
 }
 
 .orbit-icon:nth-child(1) { top: 0; left: 50%; transform: translateX(-50%); }
@@ -111,6 +155,64 @@ html {
     height: 35px;
     padding: 5px;
   }
+}
+
+/* Hero text entrance animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes gradientShimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.hero-title {
+  animation: fadeInUp 0.8s ease forwards;
+  opacity: 0;
+}
+
+.hero-name {
+  background: linear-gradient(270deg, #93c5fd, #3b82f6, #1d4ed8, #60a5fa);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShimmer 4s ease infinite;
+}
+
+.hero-desc {
+  animation: fadeInUp 0.8s ease 0.3s forwards;
+  opacity: 0;
+}
+
+.hero-btn {
+  animation: fadeInUp 0.8s ease 0.6s forwards;
+  opacity: 0;
+}
+
+.hero-image {
+  animation: fadeInLeft 0.9s ease 0.2s forwards;
+  opacity: 0;
 }
 
 @keyframes backgroundFade {
