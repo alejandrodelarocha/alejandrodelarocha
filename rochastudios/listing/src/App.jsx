@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
-import { Layers, Layout, Sliders, Music, PanelLeftClose, PanelLeft } from 'lucide-react';
+import { Layers, Layout, Sliders, Music, PanelLeftClose, PanelLeft, Mic } from 'lucide-react';
 
 import Toolbar from './components/Toolbar';
 import TemplatePanel from './components/TemplatePanel';
@@ -7,6 +7,7 @@ import TransitionPanel from './components/TransitionPanel';
 import ElementsPanel from './components/ElementsPanel';
 import MusicPanel from './components/MusicPanel';
 import SlidePanel from './components/SlidePanel';
+import VoiceoverPanel from './components/VoiceoverPanel';
 import { useCanvas } from './hooks/useCanvas';
 
 const CANVAS_W = 960;
@@ -17,6 +18,7 @@ const LEFT_PANELS = [
   { id: 'elements',    label: 'Elements',    icon: Layers },
   { id: 'transitions', label: 'Transitions', icon: Sliders },
   { id: 'music',       label: 'Music',       icon: Music },
+  { id: 'voiceover',   label: 'Voiceover',   icon: Mic },
 ];
 
 function makeSlide(id = Date.now()) {
@@ -228,6 +230,16 @@ export default function App() {
               )}
               {leftPanel === 'music' && (
                 <MusicPanel selectedTrack={selectedMusic} onSelect={setSelectedMusic} />
+              )}
+              {leftPanel === 'voiceover' && (
+                <VoiceoverPanel
+                  onVoiceoverReady={(vo) => {
+                    setSlides(prev => prev.map((s, i) =>
+                      i === currentSlide ? { ...s, voiceover: vo } : s
+                    ));
+                  }}
+                  currentSlideVoiceover={slides[currentSlide]?.voiceover}
+                />
               )}
             </div>
           </div>

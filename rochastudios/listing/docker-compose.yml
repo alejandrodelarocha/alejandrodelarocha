@@ -1,0 +1,20 @@
+services:
+  rochastudios-listing:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    image: rochastudios/listing:latest
+    container_name: rochastudios-listing
+    ports:
+      - "4174:80"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    labels:
+      - "com.rochastudios.app=listing"
+      - "com.rochastudios.description=Presentation editor with Azure Neural TTS voiceover"
